@@ -38,6 +38,7 @@ def func(x_list, y_func):
         y = eval(y_func)
         fig, ax = plt.subplots()
         ax.plot(x, y, linewidth=2.0)
+
     except:
         print('ошибка ввода')
 
