@@ -1,33 +1,66 @@
-from aiogram import types
 from aiogram import F, Router
-from aiogram.filters import Command
+from aiogram.types import FSInputFile
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.filters.command import Command
+from aiogram import Bot, types
+from aiogram.fsm.context import FSMContext
+from aiogram.utils.media_group import MediaGroupBuilder
+from states import FunctionsDialog
+from routers.comands.math import Math
+
 
 router = Router()
 
 help_functions = 'help_functions'
+help_functions_two = 'help_functions_two'
+bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0")
 
 
 @router.message(Command("functions"))
-async def start_functions(message: types.Message):
+async def start_functions(message: types.Message, state: FSMContext):
     builder_start_functions = InlineKeyboardBuilder()
     builder_start_functions.add(types.InlineKeyboardButton(
         text="подсказка",
-        callback_data=help_functions)
+        callback_data=help_functions),
+        types.InlineKeyboardButton(
+        text="подсказка 2",
+        callback_data=help_functions_two)
     )
-    await message.answer(
-        "напишите уравнение",
-        reply_markup=builder_start_functions.as_markup()
+    await bot.send_message(message.from_user.id,
+                           text='введите график функции',
+                           reply_markup=builder_start_functions.as_markup()
+                           )
+
+    await state.set_state(FunctionsDialog.functions_save)
+
+
+@router.message(FunctionsDialog.functions_save)
+async def quadratic_save(message: types.Message, state: FSMContext):
+    quadratic_x = message.text
+    solved_functions = Math()
+    await bot.send_message(message.from_user.id, text=f' Затрачено времени: {solved_functions.func(quadratic_x)}')
+    album_builder = MediaGroupBuilder()
+    album_builder.add(
+        type="photo",
+        media=FSInputFile("saved_figure.jpg"))
+    await message.answer_media_group(
+        media=album_builder.build()
     )
+    await state.clear()
 
 
 @router.callback_query(F.data == help_functions)
-async def angly_functions(callback: types.CallbackQuery):
+async def angly_callback_data_functions(callback: types.CallbackQuery):
     await callback.answer(
-        text='''
-1) введите 3 точки x, если вы введите больше или меньше трех точек, то сработает значение по умолчанию (0, 10, 100)
-2) оформление выглядит так: синус - np.cos(x), косинус - np.sin(x), Тангенс -np.tan(x),	Арккосинус - np.acos, Арксинус - np.asin,
-Арктангенс - np.atan(x), Экспонента - np.exp, Логарифм - np.log	
-''',
+        text='оформление выглядит так: синус - np.cos(x), косинус - np.sin(x), Тангенс -np.tan(x),	Арккосинус - np.acos, Арксинус - np.asin, Арктангенс - np.atan(x), Экспонента - np.exp, Логарифм - np.log',
         show_alert=True
     )
+
+
+@router.callback_query(F.data == help_functions_two)
+async def angly_callback_data_functions_two(callback: types.CallbackQuery):
+    await callback.answer(
+        text='Оформление графика функций выглядит так 1) введите три значение x 2) чему равен y пример: 1 10 100 x + 4',
+        show_alert=True
+    )
+
