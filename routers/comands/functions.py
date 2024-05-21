@@ -35,14 +35,18 @@ async def start_functions(message: types.Message, state: FSMContext):
 
 
 @router.message(FunctionsDialog.functions_save)
-async def quadratic_save(message: types.Message, state: FSMContext):
-    quadratic_x = message.text
-    solved_functions = Math()
-    await bot.send_message(message.from_user.id, text=f' Затрачено времени: {solved_functions.func(quadratic_x)}')
-    album_builder = MediaGroupBuilder()
+async def functions_save(message: types.Message, state: FSMContext):
+    functions_text = message.text
+    print(type(functions_text))
+    functions_res = Math()
+    functions_res.func(functions_text)
+    album_builder = MediaGroupBuilder(
+        caption="готовый график: "
+    )
     album_builder.add(
         type="photo",
-        media=FSInputFile("saved_figure.jpg"))
+        media=FSInputFile("saved_figure.jpg")
+    )
     await message.answer_media_group(
         media=album_builder.build()
     )
@@ -60,7 +64,7 @@ async def angly_callback_data_functions(callback: types.CallbackQuery):
 @router.callback_query(F.data == help_functions_two)
 async def angly_callback_data_functions_two(callback: types.CallbackQuery):
     await callback.answer(
-        text='Оформление графика функций выглядит так 1) введите три значение x 2) чему равен y пример: 1 10 100 x + 4',
+        text='Оформление графика функций выглядит так 1) введите три значение x 2) чему равен y пример: [1, 10, 100] x + 4',
         show_alert=True
     )
 

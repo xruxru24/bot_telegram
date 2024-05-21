@@ -3,7 +3,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters.command import Command
 from aiogram import Bot, types
 from aiogram.fsm.context import FSMContext
-from states import FunctionsDialog
+from states import QuadraticDialog
 from routers.comands.math import Math
 
 
@@ -25,10 +25,10 @@ async def start_quadratic(message: types.Message, state: FSMContext):
                            reply_markup=builder_start_quadratic.as_markup()
                            )
 
-    await state.set_state(FunctionsDialog.functions_save)
+    await state.set_state(QuadraticDialog.quadratic_save)
 
 
-@router.message(FunctionsDialog.functions_save)
+@router.message(QuadraticDialog.quadratic_save)
 async def quadratic_save(message: types.Message, state: FSMContext):
     quadratic_text = message.text
     solved_equation = Math()
