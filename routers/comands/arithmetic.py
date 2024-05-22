@@ -40,6 +40,8 @@ async def quadratic_save(message: types.Message, state: FSMContext):
         await state.clear()
     except NameError:
         await message.answer('ошибка ввода, введите ещё раз')
+    except SyntaxError:
+        await message.answer('ошибка ввода, введите ещё раз')
 
 
 @router.callback_query(F.data == help_arithmetic) # # сигнал кнопки подсказки
