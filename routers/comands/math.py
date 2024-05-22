@@ -42,7 +42,4 @@ class Math:
         return f'x1 = {y0_meaning}, x2= {y1_meaning}, y3 = {y2_meaning}'
 
 
-b = Math()
-b.func('[0, 10, 100] x + 5')
-
 
