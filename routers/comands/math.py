@@ -39,7 +39,7 @@ class Math:
         y0_meaning = eval(save_y.replace('x', 'x0'))
         y1_meaning = eval(save_y.replace('x', 'x1'))
         y2_meaning = eval(save_y.replace('x', 'x2'))
-        return f'x1 = {y0_meaning}, x2= {y1_meaning}, y3 = {y2_meaning}'
+        return f'y1 = {y0_meaning}, y2= {y1_meaning}, y3 = {y2_meaning}'
 
 
 

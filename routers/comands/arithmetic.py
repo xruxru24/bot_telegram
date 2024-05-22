@@ -33,10 +33,9 @@ async def start_quadratic(message: types.Message, state: FSMContext):
 @router.message(ArithmeticDialog.arithmetic_solution) # ответ примера и его сохранение
 async def quadratic_save(message: types.Message, state: FSMContext):
     try:
-        start_time = time()
         arithmetic_text = message.text
         arithmetic_equation = Math()
-        await bot.send_message(message.from_user.id, text=f'{arithmetic_equation.arithmetic(arithmetic_text)} \nпотрачено время: {time() - start_time}')
+        await bot.send_message(message.from_user.id, text=f'{arithmetic_equation.arithmetic(arithmetic_text)}')
         await state.clear()
     except NameError:
         await message.answer('ошибка ввода, введите ещё раз')
