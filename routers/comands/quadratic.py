@@ -34,7 +34,7 @@ async def quadratic_save(message: types.Message, state: FSMContext):
     start_time = time()
     quadratic_text = message.text
     solved_equation = Math()
-    await bot.send_message(message.from_user.id, text=f'{solved_equation.x(quadratic_text)} \nпотрачено время: {time() - start_time}')
+    await bot.send_message(message.from_user.id, text=f'{solved_equation.quadratic_meaning(quadratic_text)} \nпотрачено время: {time() - start_time}')
     await state.clear()
 
 

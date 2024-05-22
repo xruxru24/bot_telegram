@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Math:
-    def x(self, formula):
+    def quadratic_meaning(self, formula):
         transformations = (standard_transformations + (implicit_multiplication_application,))
 
         def map_operations(formula_str):
