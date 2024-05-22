@@ -56,6 +56,8 @@ async def functions_save(message: types.Message, state: FSMContext):
         await message.answer('Ошибка ввода, введите ещё раз')
     except ZeroDivisionError:
         await message.answer('Ошибка в функции, введите ещё раз')
+    except SyntaxError:
+        await message.answer('Ошибка ввода, введите ещё раз')
 
 
 @router.callback_query(F.data == help_functions)
