@@ -7,7 +7,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from routers.comands.math import Math
 from states import ArithmeticDialog
 from time import time
-from math import ceil
 
 
 router = Router()
