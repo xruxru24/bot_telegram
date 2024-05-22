@@ -1,3 +1,4 @@
+from time import time
 from aiogram import F, Router
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters.command import Command
@@ -30,9 +31,10 @@ async def start_quadratic(message: types.Message, state: FSMContext):
 
 @router.message(QuadraticDialog.quadratic_save)
 async def quadratic_save(message: types.Message, state: FSMContext):
+    start_time = time()
     quadratic_text = message.text
     solved_equation = Math()
-    await bot.send_message(message.from_user.id, text=f'{solved_equation.x(quadratic_text)}')
+    await bot.send_message(message.from_user.id, text=f'{solved_equation.x(quadratic_text)} \nпотрачено время: {time() - start_time}')
     await state.clear()
 
 

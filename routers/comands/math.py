@@ -1,14 +1,11 @@
 from sympy import solve, parse_expr
 from sympy.parsing.sympy_parser import standard_transformations, implicit_multiplication_application
-from time import time
 import matplotlib.pyplot as plt
 import numpy as np
 
 
 class Math:
-
     def x(self, formula):
-        start_time = time()
         transformations = (standard_transformations + (implicit_multiplication_application,))
 
         def map_operations(formula_str):
@@ -16,9 +13,7 @@ class Math:
 
         f = parse_expr(map_operations(formula), transformations=transformations)
         roots = solve(f)
-        end_time = time()
-
-        return f'{roots} \nзатрачено времени {end_time - start_time}'
+        return roots
 
     def arithmetic(self, *args):
         return eval(*args)
@@ -32,6 +27,7 @@ class Math:
         x += ']'
         y = x_and_y
         y = y.replace(x, '')
+        save_y = y
         x = eval(x)
         plt.style.use('_mpl-gallery')
         x0, x1, x2 = x
@@ -40,4 +36,13 @@ class Math:
         fig, ax = plt.subplots()
         ax.plot(x, y, linewidth=2)
         fig.savefig('saved_figure.jpg')
+        y0_meaning = eval(save_y.replace('x', 'x0'))
+        y1_meaning = eval(save_y.replace('x', 'x1'))
+        y2_meaning = eval(save_y.replace('x', 'x2'))
+        return f'x1 = {y0_meaning}, x2= {y1_meaning}, y3 = {y2_meaning}'
+
+
+b = Math()
+b.func('[0, 10, 100] x + 5')
+
 

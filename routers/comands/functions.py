@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.utils.media_group import MediaGroupBuilder
 from states import FunctionsDialog
 from routers.comands.math import Math
+from time import time
 
 
 router = Router()
@@ -36,27 +37,29 @@ async def start_functions(message: types.Message, state: FSMContext):
 
 @router.message(FunctionsDialog.functions_save)
 async def functions_save(message: types.Message, state: FSMContext):
-    functions_text = message.text
-    print(type(functions_text))
-    functions_res = Math()
-    functions_res.func(functions_text)
-    album_builder = MediaGroupBuilder(
-        caption="готовый график: "
-    )
-    album_builder.add(
-        type="photo",
-        media=FSInputFile("saved_figure.jpg")
-    )
-    await message.answer_media_group(
-        media=album_builder.build()
-    )
-    await state.clear()
+    try:
+        start_time = time()
+        functions_text = message.text
+        functions_res = Math()
+        album_builder = MediaGroupBuilder(
+            caption=f'готовый график: \n { functions_res.func(functions_text)} \nпотрачено время: {time() - start_time}'
+        )
+        album_builder.add(
+            type="photo",
+            media=FSInputFile("saved_figure.jpg")
+        )
+        await message.answer_media_group(
+            media=album_builder.build()
+        )
+        await state.clear()
+    except IndexError:
+        await message.answer('Ошибка ввода, введите ещё раз')
 
 
 @router.callback_query(F.data == help_functions)
 async def angly_callback_data_functions(callback: types.CallbackQuery):
     await callback.answer(
-        text='оформление выглядит так: синус - np.cos(x), косинус - np.sin(x), Тангенс -np.tan(x),	Арккосинус - np.acos, Арксинус - np.asin, Арктангенс - np.atan(x), Экспонента - np.exp, Логарифм - np.log',
+        text='оформление: синус - np.cos(x), косинус - np.sin(x), Тангенс -np.tan(x),	Арккосинус - np.acos, Арксинус - np.asin, Арктангенс - np.atan(x), Экспонента - np.exp, Логарифм - np.log',
         show_alert=True
     )
 
@@ -64,7 +67,7 @@ async def angly_callback_data_functions(callback: types.CallbackQuery):
 @router.callback_query(F.data == help_functions_two)
 async def angly_callback_data_functions_two(callback: types.CallbackQuery):
     await callback.answer(
-        text='Оформление графика функций выглядит так 1) введите три значение x 2) чему равен y пример: [1, 10, 100] x + 4',
+        text='корень - sqrt(x) степень - x ** 2. Оформление графика функций выглядит так 1) введите три значение x  ЧЕРЕЗ ЗАПЯТУЮ 2) чему равен y пример: [1, 10, 100] x + 4',
         show_alert=True
     )
 

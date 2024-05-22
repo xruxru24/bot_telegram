@@ -6,6 +6,8 @@ from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from routers.comands.math import Math
 from states import ArithmeticDialog
+from time import time
+from math import ceil
 
 
 router = Router()
@@ -31,10 +33,14 @@ async def start_quadratic(message: types.Message, state: FSMContext):
 
 @router.message(ArithmeticDialog.arithmetic_save)
 async def quadratic_save(message: types.Message, state: FSMContext):
-    arithmetic_text = message.text
-    arithmetic_equation = Math()
-    await bot.send_message(message.from_user.id, text=f'{arithmetic_equation.arithmetic(arithmetic_text)}')
-    await state.clear()
+    try:
+        start_time = time()
+        arithmetic_text = message.text
+        arithmetic_equation = Math()
+        await bot.send_message(message.from_user.id, text=f'{arithmetic_equation.arithmetic(arithmetic_text)} \nпотрачено время: {time() - start_time}')
+        await state.clear()
+    except NameError:
+        await message.answer('ошибка ввода, введите ещё раз')
 
 
 @router.callback_query(F.data == help_arithmetic)
