@@ -2,12 +2,12 @@ from aiogram.filters.state import StatesGroup, State
 
 
 class QuadraticDialog(StatesGroup):
-    quadratic_save = State()
+    quadratic_solution = State()
 
 
 class FunctionsDialog(StatesGroup):
-    functions_save = State()
+    functions_save_solution = State()
 
 
 class ArithmeticDialog(StatesGroup):
-    arithmetic_save = State()
+    arithmetic_solution = State()

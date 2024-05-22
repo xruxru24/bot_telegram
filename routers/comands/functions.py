@@ -32,10 +32,10 @@ async def start_functions(message: types.Message, state: FSMContext):
                            reply_markup=builder_start_functions.as_markup()
                            )
 
-    await state.set_state(FunctionsDialog.functions_save)
+    await state.set_state(FunctionsDialog.functions_save_solution)
 
 
-@router.message(FunctionsDialog.functions_save)
+@router.message(FunctionsDialog.functions_save_solution)
 async def functions_save(message: types.Message, state: FSMContext):
     try:
         start_time = time()
@@ -56,8 +56,6 @@ async def functions_save(message: types.Message, state: FSMContext):
         await message.answer('Ошибка ввода, введите ещё раз')
     except ZeroDivisionError:
         await message.answer('Ошибка в функции, введите ещё раз')
-    except SyntaxError:
-        await message.answer('Ошибка ввода, введите ещё раз')
 
 
 @router.callback_query(F.data == help_functions)
@@ -71,7 +69,7 @@ async def angly_callback_data_functions(callback: types.CallbackQuery):
 @router.callback_query(F.data == help_functions_two)
 async def angly_callback_data_functions_two(callback: types.CallbackQuery):
     await callback.answer(
-        text='корень - sqrt(x) степень - x ** 2. Оформление графика функций выглядит так 1) введите три значение x  ЧЕРЕЗ ЗАПЯТУЮ 2) чему равен y пример: [1, 10, 100] x + 4',
+        text='корень - sqrt(x) степень - x ** 2. Оформление графика функций выглядит так 1) введите три значение  в квадратные скобки x ЧЕРЕЗ ЗАПЯТУЮ 2) чему равен y пример: [1, 10, 100] x + 4',
         show_alert=True
     )
 

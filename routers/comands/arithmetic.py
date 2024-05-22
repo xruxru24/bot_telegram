@@ -17,9 +17,9 @@ bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0")
 
 @router.message(Command("arithmetic"))
 async def start_quadratic(message: types.Message, state: FSMContext):
-    builder_start_help_arithmetic = InlineKeyboardBuilder()
+    builder_start_help_arithmetic = InlineKeyboardBuilder() # созданию меню кнопки
     builder_start_help_arithmetic.add(types.InlineKeyboardButton(
-        text="подсказка",
+        text="подсказка", # текст кнопки
         callback_data=help_arithmetic)
     )
     await bot.send_message(message.from_user.id,
@@ -27,10 +27,10 @@ async def start_quadratic(message: types.Message, state: FSMContext):
                            reply_markup=builder_start_help_arithmetic.as_markup()
                            )
 
-    await state.set_state(ArithmeticDialog.arithmetic_save)
+    await state.set_state(ArithmeticDialog.arithmetic_solution)
 
 
-@router.message(ArithmeticDialog.arithmetic_save)
+@router.message(ArithmeticDialog.arithmetic_solution) # ответ примера и его сохранение
 async def quadratic_save(message: types.Message, state: FSMContext):
     try:
         start_time = time()
@@ -42,7 +42,7 @@ async def quadratic_save(message: types.Message, state: FSMContext):
         await message.answer('ошибка ввода, введите ещё раз')
 
 
-@router.callback_query(F.data == help_arithmetic)
+@router.callback_query(F.data == help_arithmetic) # # сигнал кнопки подсказки
 async def angly_callback_data_arithmetic(callback_query: CallbackQuery):
     await callback_query.answer(
         text='1) бот умеет сравнивать примеры 2) складывать, умножать, делить, вычитание!!! 3) бот может работать с десятичными числами',

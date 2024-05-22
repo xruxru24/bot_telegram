@@ -27,7 +27,7 @@ class Math:
         x += ']'
         y = x_and_y
         y = y.replace(x, '')
-        save_y = y
+        save_y = y # разделение двух переменных
         x = eval(x)
         plt.style.use('_mpl-gallery')
         x0, x1, x2 = x
