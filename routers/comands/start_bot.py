@@ -8,7 +8,7 @@ from routers import router as main_router
 logging.basicConfig(level=logging.INFO)
 
 round_up = 3
-bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0")
+bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0") # сюда ввести токен бота
 dp = Dispatcher()
 dp.include_router(main_router)
 

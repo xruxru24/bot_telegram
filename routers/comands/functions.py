@@ -14,7 +14,7 @@ router = Router()
 
 help_functions = 'help_functions'
 help_functions_two = 'help_functions_two'
-bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0")
+bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0") # сюда ввести токен бота
 
 
 @router.message(Command("functions"))

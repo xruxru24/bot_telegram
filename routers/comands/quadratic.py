@@ -11,7 +11,7 @@ from routers.comands.math import Math
 router = Router()
 
 help_equations = 'help_quadratic_equations'
-bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0")
+bot = Bot(token="7025395033:AAFiyenAhKRk3K1aoPmB90vOZFkuQ37CLE0") # сюда ввести токен бота
 
 
 @router.message(Command("quadratic"))
